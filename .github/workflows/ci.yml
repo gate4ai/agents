@@ -45,7 +45,7 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: |
-            your-dockerhub-username/your-repo-name:latest
-            your-dockerhub-username/your-repo-name:${{ github.sha }}
+            gate4ai/agents:latest
+            gate4ai/agents:${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
