@@ -40,6 +40,12 @@ export default defineNuxtConfig({
     public: {},
   },
 
+  hooks: {
+    close: (nuxt) => {
+      if (!nuxt.options._prepare) process.exit();
+    },
+  },
+
   vite: process.env.NODE_ENV?.includes("test")
     ? {}
     : {
