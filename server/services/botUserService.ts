@@ -69,7 +69,9 @@ export async function getUserBotPrompt(
  * Retrieves all bots from the database.
  */
 export async function getAllBots(): Promise<Bot[]> {
-  return allQuery<Bot>("SELECT id, name, username FROM bots");
+  return allQuery<Bot>(
+    "SELECT id, name, username FROM bots WHERE is_active = 1"
+  );
 }
 
 /**

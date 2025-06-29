@@ -1,5 +1,6 @@
 import { initializeDatabase, runQuery } from "~/server/db";
 import { initializeScheduler } from "~/server/services/schedulerService";
+import { syncBotsFromEnv } from "~/server/services/botSyncService";
 import logger from "~/server/utils/logger";
 import { useRuntimeConfig } from "#imports";
 
@@ -8,6 +9,9 @@ export default defineNitroPlugin(async (_nitroApp) => {
   try {
     await initializeDatabase();
     logger.info("Database initialized via Nitro plugin.");
+
+    await syncBotsFromEnv();
+    logger.info("Bots synchronized successfully from environment.");
 
     const config = useRuntimeConfig();
     // For E2E tests, the test script sets DB_FILE_NAME to a specific test file.

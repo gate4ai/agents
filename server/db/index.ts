@@ -31,6 +31,7 @@ export async function initializeDatabase() {
         name TEXT,
         username TEXT,
         telegram_id INTEGER UNIQUE,
+        is_active BOOLEAN DEFAULT 1,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
       );
@@ -69,6 +70,19 @@ export async function initializeDatabase() {
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
         FOREIGN KEY (bot_id) REFERENCES bots (id) ON DELETE CASCADE
+      );
+
+      CREATE TABLE IF NOT EXISTS messages (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        telegram_message_id INTEGER NOT NULL,
+        chat_id INTEGER NOT NULL,
+        user_id INTEGER NOT NULL,
+        bot_id INTEGER NOT NULL,
+        role TEXT CHECK(role IN ('user', 'assistant')) NOT NULL,
+        content TEXT NOT NULL,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+        FOREIGN KEY (bot_id) REFERENCES bots(id) ON DELETE CASCADE
       );
 
       CREATE TRIGGER IF NOT EXISTS update_users_updated_at
